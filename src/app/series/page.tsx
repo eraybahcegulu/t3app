@@ -1,7 +1,7 @@
 import { getServerAuthSession } from 'app/server/auth';
 import React from 'react'
-import BackButton from '../_components/buttons/BackButton';
-import SignInButton from '../_components/buttons/SignInButton';
+import BackButton from '../_components/Buttons/goHomeButton';
+import SignInButton from '../_components/Buttons/signInButton';
 
 const Series = async () => {
     const session = await getServerAuthSession();

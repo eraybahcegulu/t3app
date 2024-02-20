@@ -1,10 +1,10 @@
 import { getServerAuthSession } from 'app/server/auth';
 import React from 'react'
 
-import BackButton from '../_components/buttons/BackButton';
-import SignInButton from '../_components/buttons/SignInButton';
-import { CreateMovie } from '../_components/createMovie';
-import AllMovies from '../_components/movies';
+import BackButton from '../_components/Buttons/goHomeButton';
+import SignInButton from '../_components/Buttons/signInButton';
+import { CreateMovie } from '../_components/Movie/createMovie';
+import AllMovies from '../_components/Movie/getMovies';
 
 const Movies = async () => {
     const session = await getServerAuthSession();

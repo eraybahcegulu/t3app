@@ -3,8 +3,7 @@ import { getServerAuthSession } from "app/server/auth";
 import Link from "next/link";
 import { Avatar, Button, Card } from "antd";
 import { MdLogout } from "react-icons/md";
-import SignInButton from "./_components/buttons/SignInButton";
-import { api } from "app/trpc/server";
+import SignInButton from "./_components/Buttons/signInButton";
 
 export default async function Home() {
   noStore();

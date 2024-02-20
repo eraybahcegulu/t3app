@@ -16,7 +16,7 @@ export const movieRouter = createTRPCRouter({
     }),
 
   create: protectedProcedure
-  .input(z.object({ name: z.string().min(1) }))
+    .input(z.object({ name: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
       // simulate a slow db call
 
@@ -25,19 +25,19 @@ export const movieRouter = createTRPCRouter({
       const existingMovie = await ctx.db.movie.findFirst({
         where: { name: input.name },
       });
-  
+
       if (existingMovie) {
-        return { error: `${existingMovie.name} movie already exists.`};
+        return { error: `Failed created. Movie "${existingMovie.name}"  already exists.` };
       }
 
-      await ctx.db.movie.create({
+      const createdMovie = await ctx.db.movie.create({
         data: {
           name: input.name,
           createdBy: { connect: { id: ctx.session.user.id } },
         },
       });
 
-      return { message: 'Movie created successfully'};
+      return { message: `Movie "${createdMovie.name}" created successfully` };
     }),
 
   getLatest: protectedProcedure.query(({ ctx }) => {
@@ -46,6 +46,27 @@ export const movieRouter = createTRPCRouter({
       where: { createdBy: { id: ctx.session.user.id } },
     });
   }),
+
+  delete: protectedProcedure
+    .input(z.object({ id: z.number().min(1) }))
+    .mutation(async ({ ctx, input }) => {
+      // simulate a slow db call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      const existingMovie = await ctx.db.movie.findFirst({
+        where: { id: input.id },
+      });
+
+      if (!existingMovie) {
+        return { error: `Failed. Movie with id ${input.id} not found.` };
+      }
+
+      await ctx.db.movie.delete({
+        where: { id: input.id },
+      });
+
+      return { message: `Movie "${existingMovie.name}" deleted successfully` };
+    }),
 
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
@@ -56,4 +77,16 @@ export const movieRouter = createTRPCRouter({
       where: { createdBy: { id: ctx.session.user.id } },
     });
   }),
+
+  getOne: protectedProcedure
+    .input(z.object({ id: z.number().min(1) }))
+    .mutation(async ({ ctx, input }) => {
+      // simulate a slow db call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      return ctx.db.movie.findFirst({
+        where: { id: input.id }
+      },
+      );
+    }),
 });

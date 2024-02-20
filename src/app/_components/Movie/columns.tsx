@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { FaRegEdit } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa6";
-import { RiDeleteBin5Fill } from "react-icons/ri";
-
+import DeleteMovie from "./deleteMovie";
 
 export const movieColumns = [
     {
@@ -27,7 +26,7 @@ export const movieColumns = [
 
                 <FaRegEdit className="text-xl text-blue-500 hover:scale-125 transition-all cursor-pointer" />
 
-                <RiDeleteBin5Fill className="text-xl text-red-500 hover:scale-125 transition-all cursor-pointer" />
+                <DeleteMovie id={record.id} />
 
             </div>
     }
